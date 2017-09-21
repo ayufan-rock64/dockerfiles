@@ -9,9 +9,9 @@ RUN apt-get install -y python git-core gnupg flex bison gperf build-essential \
     dosfstools gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
     gcc-arm-linux-gnueabi g++-arm-linux-gnueabi ccache \
     sudo cpio nano vim kmod kpartx wget bsdtar qemu-user-static \
-    pxz ruby-dev debootstrap multistrap
-
-RUN apt-get install -y libssl-dev parted live-build linaro-image-tools jq
+    pxz ruby-dev debootstrap multistrap \
+    gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf dpkg-cross \
+    libssl-dev parted live-build linaro-image-tools jq
 
 RUN gem install fpm
 
@@ -25,15 +25,16 @@ RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin
 RUN sed -i 's/deb /deb [arch=amd64] /g' /etc/apt/sources.list && \
     echo "deb [arch=armhf,arm64] http://ports.ubuntu.com/ xenial main restricted universe multiverse" > /etc/apt/sources.list.d/ports.list && \
     echo "deb [arch=armhf,arm64] http://ports.ubuntu.com/ xenial-updates main restricted universe multiverse" > /etc/apt/sources.list.d/ports-updates.list
-    
+
 RUN dpkg --add-architecture arm64 && \
     dpkg --add-architecture armhf
 
 RUN apt-get update -y
 
-RUN ln -s /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 /lib/
+RUN ln -s /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 /lib/ && \
+    ln -s /usr/arm-linux-gnueabihf/lib/ld-linux-armhf.so.3 /lib/
 
-ENV LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib:$/usr/arm-linux-gnueabi/lib:LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib:$/usr/arm-linux-gnueabihf/lib:LD_LIBRARY_PATH
 
 ENV USER=root \
     HOME=/root
