@@ -21,9 +21,21 @@ RUN curl -L https://github.com/aktau/github-release/releases/download/v0.6.2/lin
 RUN which github-release
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && \
     chmod +x /usr/local/bin/repo
+    
+RUN sed -i 's/deb /deb [arch=amd64] /g' /etc/apt/sources.list && \
+    echo "deb [arch=armhf,arm64] http://ports.ubuntu.com/ xenial main restricted universe multiverse" > /etc/apt/sources.list.d/ports.list && \
+    echo "deb [arch=armhf,arm64] http://ports.ubuntu.com/ xenial-updates main restricted universe multiverse" > /etc/apt/sources.list.d/ports-updates.list && \
+    
+ RUN dpkg --add-architecture arm64 && \
+     dpkg --add-architecture armhf
+
+RUN apt-get update -y
 
 RUN ln -s /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 /lib/
 ENV LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib:$LD_LIBRARY_PATH
+
+RUN ln -s /usr/aarch64-linux-gnu/lib/ld-linux-armhf.so.1 /lib/
+ENV LD_LIBRARY_PATH=/usr/armhf-linux-gnu/lib:$LD_LIBRARY_PATH
 
 ENV USER=root \
     HOME=/root
