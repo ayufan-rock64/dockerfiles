@@ -2,8 +2,8 @@ FROM ubuntu:bionic
 
 RUN apt-get update -y && \
     apt-get install -y python git-core gnupg flex bison gperf build-essential \
-    zip curl zlib1g-dev libc6-dev-i386 \
-    lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \
+    zip curl zlib1g-dev libc6-dev-i386 rsync \
+    lib32ncurses5-dev lib32z-dev ccache \
     libgl1-mesa-dev libxml2-utils xsltproc unzip mtools u-boot-tools \
     htop iotop sysstat iftop pigz bc device-tree-compiler lunzip \
     dosfstools gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
@@ -13,7 +13,8 @@ RUN apt-get update -y && \
     live-build linaro-image-tools jq locales \
     gawk swig libpython-dev libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
-    openjdk-8-jdk gcc-multilib g++-multilib
+    openjdk-8-jdk && \
+    apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
 

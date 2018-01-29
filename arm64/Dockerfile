@@ -2,16 +2,16 @@ FROM arm64v8/ubuntu:bionic
 
 RUN apt-get update -y && \
     apt-get install -y python git-core gnupg flex bison gperf build-essential \
-    zip curl zlib1g-dev \
-    lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \
+    zip curl zlib1g-dev rsync \
+    libncurses5-dev ccache \
     libgl1-mesa-dev libxml2-utils xsltproc unzip mtools u-boot-tools \
     htop iotop sysstat iftop pigz bc device-tree-compiler lunzip \
     dosfstools sudo cpio nano vim kmod kpartx wget bsdtar \
     pxz ruby-dev debootstrap multistrap libssl-dev parted \
     live-build linaro-image-tools jq locales \
     gawk swig libpython-dev libusb-1.0-0-dev \
-    pkg-config autoconf golang-go \
-    openjdk-8-jdk gcc-multilib g++-multilib
+    pkg-config autoconf golang-go && \
+    apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
 
@@ -26,6 +26,7 @@ ENV LANG=en_US.UTF-8 \
 RUN git config --global user.email "you@rock64" && \
     git config --global user.name "ROCK64 Shell"
 
+RUN apt-get install -y libffi-dev
 RUN gem install fpm
 RUN go get github.com/aktau/github-release
 
