@@ -1,5 +1,5 @@
 REPO := ayufan/rock64-dockerfiles
-TARGETS := arm64 x86_64
+TARGETS := arm32 arm64 x86_64
 
 all: $(TARGETS)
 
