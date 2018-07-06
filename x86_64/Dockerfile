@@ -13,7 +13,8 @@ RUN apt-get update -y && \
     live-build linaro-image-tools jq locales \
     gawk swig libpython-dev libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
-    openjdk-8-jdk && \
+    openjdk-8-jdk \
+    eatmydata && \
     apt-get autoclean
 
 RUN locale-gen en_US.UTF-8

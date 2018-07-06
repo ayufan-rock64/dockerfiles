@@ -10,7 +10,8 @@ RUN apt-get update -y && \
     pxz ruby-dev debootstrap multistrap libssl-dev parted \
     live-build linaro-image-tools jq locales \
     gawk swig libpython-dev libusb-1.0-0-dev \
-    pkg-config autoconf golang-go && \
+    pkg-config autoconf golang-go \
+    eatmydata && \
     apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
