@@ -13,6 +13,7 @@ RUN apt-get update -y && \
     live-build linaro-image-tools jq locales \
     gawk swig libpython-dev libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
+    python3-distutils python3-dev \
     openjdk-8-jdk \
     eatmydata && \
     apt-get autoclean
