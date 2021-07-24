@@ -1,15 +1,16 @@
-FROM arm32v7/ubuntu:bionic
+FROM arm32v7/ubuntu:focal
 
-RUN apt-get update -y && \
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update -y && \
     apt-get install -y python git-core gnupg flex bison gperf build-essential \
     zip curl zlib1g-dev rsync \
     libncurses5-dev ccache \
     libgl1-mesa-dev libxml2-utils xsltproc unzip mtools u-boot-tools \
     htop iotop sysstat iftop pigz bc device-tree-compiler lunzip \
-    dosfstools sudo cpio nano vim kmod kpartx wget bsdtar \
-    pxz ruby-dev debootstrap multistrap libssl-dev parted \
-    live-build linaro-image-tools jq locales \
-    gawk swig libpython-dev libusb-1.0-0-dev \
+    dosfstools sudo cpio nano vim kmod kpartx wget libarchive-tools \
+    xz-utils ruby-dev debootstrap multistrap libssl-dev parted \
+    live-build jq locales \
+    gawk swig libpython2-dev libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
     python3-distutils python3-dev \
     eatmydata && \

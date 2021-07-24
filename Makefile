@@ -5,6 +5,8 @@ all: $(TARGETS)
 
 .PHONY: $(TARGETS)
 
+arm32 arm64: export DOCKER_CONTEXT=oracle-arm64
+
 $(TARGETS):
 	docker build -t $(REPO):$@ $@/
 	docker push $(REPO):$@
