@@ -1,5 +1,5 @@
 ARG DOCKER_ARCH=
-FROM ${DOCKER_ARCH}debian:latest
+FROM ${DOCKER_ARCH}debian:bookworm
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \

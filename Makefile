@@ -1,6 +1,6 @@
 REPO := ayufan/rock64-dockerfiles
 TARGETS := arm64 x86_64
-VERSION := v2
+VERSION := bookworm
 
 all: $(TARGETS)
 
