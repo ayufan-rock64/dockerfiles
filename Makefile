@@ -1,6 +1,9 @@
 REPO := ayufan/rock64-dockerfiles
 TARGETS := arm64 x86_64
-VERSION ?= bookworm
+
+ifeq (,$(VERSION))
+$(error "Use `make <target> VERSION=bookworm`, or `make <target> VERSION=bullseye`")
+endif
 
 all: $(TARGETS)
 
@@ -14,13 +17,13 @@ $(TARGETS):
 	docker build --build-arg DOCKER_ARCH=$(DOCKER_ARCH) --build-arg DEBIAN_VERSION=$(VERSION) --tag $(REPO):$(VERSION)-$@ .
 	docker push $(REPO):$(VERSION)-$@
 
-$(VERSION):
+tag:
 	-rm -rf ~/.docker/manifests
 	docker manifest create $(REPO):$(VERSION) \
 		$(addprefix $(REPO):$(VERSION)-, $(TARGETS))
 	docker manifest push $(REPO):$(VERSION)
 
-latest: $(VERSION)
+latest: tag
 	docker manifest create $(REPO):latest \
 		$(addprefix $(REPO):$(VERSION)-, $(TARGETS))
 	docker manifest push $(REPO):latest
