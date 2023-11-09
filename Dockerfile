@@ -15,7 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     live-build jq locales \
     gawk swig libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
-    python3-distutils python3-dev \
+    python3-distutils python3-dev python3-pip python3-pyelftools \
     eatmydata && \
     ( \
         ( \
