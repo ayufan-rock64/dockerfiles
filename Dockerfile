@@ -17,6 +17,14 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     pkg-config autoconf golang-go \
     python3-distutils python3-dev \
     eatmydata && \
+    ( \
+        ( \
+            . /etc/os-release && \
+            echo deb http://deb.debian.org/debian $(echo "$VERSION_CODENAME")-backports main >> /etc/apt/sources.list.d/backports.list && \
+            apt-get update -y && \
+            apt-get install -y -t $(echo "$VERSION_CODENAME")-backports golang-go \
+        ) || true \
+    ) && \
     apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
@@ -33,6 +41,13 @@ RUN git config --global user.email "you@rock64" && \
     git config --global user.name "ROCK64 Shell"
 
 RUN gem install fpm
+
+RUN ( \
+        . /etc/os-release && \
+        echo deb http://deb.debian.org/debian $(echo "$VERSION_CODENAME")-backports main >> /etc/apt/sources.list.d/backports.list && \
+        apt-get update -y && \
+        apt-get install -y -t $(echo "$VERSION_CODENAME")-backports golang-go \
+    ) || true
 
 RUN go install github.com/github-release/github-release@v0.10.0 && \
     which github-release
