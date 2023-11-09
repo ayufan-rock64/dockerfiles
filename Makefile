@@ -12,7 +12,7 @@ x86_64: DOCKER_ARCH=amd64/
 
 $(TARGETS):
 	docker build --build-arg DOCKER_ARCH=$(DOCKER_ARCH) --tag $(REPO):$(VERSION)-$@ .
-	docker push $(REPO):$@
+	docker push $(REPO):$(VERSION)-$@
 
 latest:
 	-rm -rf ~/.docker/manifests
