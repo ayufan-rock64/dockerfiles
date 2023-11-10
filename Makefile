@@ -24,8 +24,10 @@ tag:
 	docker manifest create $(REPO):$(VERSION) \
 		$(addprefix $(REPO):$(VERSION)-, $(TARGETS))
 	docker manifest push $(REPO):$(VERSION)
+	docker pull $(REPO):$(VERSION)
 
 latest: tag
 	docker manifest create $(REPO):latest \
 		$(addprefix $(REPO):$(VERSION)-, $(TARGETS))
 	docker manifest push $(REPO):latest
+	docker pull $(REPO):latest

@@ -29,7 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
-    apt install -y uuid-dev libgnutls28-dev && \
+    apt install -y uuid-dev libgnutls28-dev fdisk gdisk && \
     apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
