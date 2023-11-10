@@ -29,7 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
-    apt install -y uuid-dev libgnutls28-dev fdisk gdisk && \
+    apt install -y uuid-dev libgnutls28-dev fdisk gdisk cmake libftdi1-dev libpopt-dev && \
     apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
@@ -73,6 +73,13 @@ RUN git clone https://github.com/rockchip-linux/rkdeveloptool && \
     make install && \
     cd .. && \
     rm -rf rkdeveloptool
+
+RUN git clone https://github.com/Badger-Embedded/badgerd-sdwirec.git && \
+    cd badgerd-sdwirec/sdwirec-sw && \
+    cmake . && \
+    make install && \
+    cd ../.. && \
+    rm -rf badgerd-sdwirec
 
 ENV LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib:$LD_LIBRARY_PATH
 
