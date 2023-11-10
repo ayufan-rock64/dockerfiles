@@ -5,6 +5,8 @@ ifeq (,$(VERSION))
 $(error "Use `make <target> VERSION=bookworm`, or `make <target> VERSION=bullseye`")
 endif
 
+-include env.mk
+
 all: $(TARGETS)
 
 .PHONY: $(TARGETS)

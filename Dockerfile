@@ -16,7 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     gawk swig libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
     python3-distutils python3-dev python3-pip python3-pyelftools \
-    eatmydata && \
+    eatmydata debhelper && \
     ( \
         ( \
             . /etc/os-release && \
@@ -55,10 +55,9 @@ RUN go install github.com/github-release/github-release@v0.10.0 && \
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && \
     chmod +x /usr/local/bin/repo
 
-# Missing?
-# RUN git clone https://github.com/rockchip-linux/rkflashtool && \
-#     make -C rkflashtool install && \
-#     rm -rf rkflashtool
+RUN git clone https://github.com/linux-rockchip/rkflashtool.git && \
+    make -C rkflashtool install && \
+    rm -rf rkflashtool
 
 RUN git clone https://github.com/rockchip-linux/rkdeveloptool && \
     cd rkdeveloptool && \
