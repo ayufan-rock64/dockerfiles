@@ -29,7 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
-    apt install -y uuid-dev libgnutls28-dev fdisk gdisk cmake libftdi1-dev libpopt-dev && \
+    apt install -y uuid-dev libgnutls28-dev fdisk gdisk cmake libftdi1-dev libpopt-dev libncurses-dev zstd pv && \
     apt-get autoclean
 
 RUN locale-gen en_US.UTF-8
@@ -42,9 +42,9 @@ ENV LANG=en_US.UTF-8 \
     GOPATH=/go \
     PATH=$PATH:/go/bin
 
-RUN git config --global user.email "you@rock64" && \
-    git config --global user.name "ROCK64 Shell" && \
-    git config --global --add safe.directory "*"
+RUN git config --system user.email "you@rock64" && \
+    git config --system user.name "ROCK64 Shell" && \
+    git config --system --add safe.directory "*"
 
 RUN gem install fpm
 
