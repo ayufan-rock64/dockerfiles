@@ -29,15 +29,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
-    apt install -y uuid-dev libgnutls28-dev fdisk gdisk cmake libftdi1-dev libpopt-dev libncurses-dev zstd pv && \
+    apt install -y uuid-dev libgnutls28-dev fdisk gdisk cmake libftdi1-dev libpopt-dev libncurses-dev zstd pv moreutils && \
     apt-get autoclean
 
-RUN locale-gen en_US.UTF-8
-
-ENV LANG=en_US.UTF-8 \
-    LANGUAGE=en_US:en \
-    LC_ALL=en_US.UTF-8 \
-    USER=root \
+ENV USER=root \
     HOME=/root \
     GOPATH=/go \
     PATH=$PATH:/go/bin
