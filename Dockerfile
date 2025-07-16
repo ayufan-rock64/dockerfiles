@@ -16,7 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     gawk swig libusb-1.0-0-dev \
     pkg-config autoconf golang-go \
     python3-distutils python3-dev python3-pip python3-pyelftools \
-    eatmydata debhelper libelf-dev && \
+    eatmydata debhelper libelf-dev libdw-dev && \
     ( \
         ( \
             . /etc/os-release && \
