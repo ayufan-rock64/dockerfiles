@@ -5,12 +5,20 @@ on:
 
 jobs:
   docker-build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs_on }}
     strategy:
+      fail-fast: false
       matrix:
         variant: [bookworm, bullseye]
+        target: [arm64, x86_64]
+        include:
+          - target: arm64
+            runs_on: ubuntu-24.04-arm
+          - target: x86_64
+            runs_on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.variant }}
+      TAG: ${{ matrix.variant }}-run-${{ github.run_number }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -21,7 +29,33 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build targets
-      run: make all
-    - name: Push targets
+    - name: Build target
+      run: make ${{ matrix.target }}
+
+  manifest:
+    runs-on: ubuntu-latest
+    needs: [docker-build]
+    strategy:
+      matrix:
+        variant: [bookworm, bullseye]
+        include:
+          - variant: bookworm
+            is_latest: true
+    env:
+      VERSION: ${{ matrix.variant }}
+      TAG: ${{ matrix.variant }}-run-${{ github.run_number }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Create ${{ env.TAG }} manifest
       run: make tag
+    - name: Create ${{ matrix.variant }} manifest
+      run: make tag MANIFEST_TAG=${{ matrix.variant }}
+    - name: Create latest
+      if: ${{ matrix.is_latest }}
+      run: make tag MANIFEST_TAG=latest
